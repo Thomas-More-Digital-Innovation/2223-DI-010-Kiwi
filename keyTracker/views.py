@@ -27,11 +27,14 @@ def homepage(request):
                     key = Key(keyHolder=None, isReturned=True)
                     key.save()
 
+        # get the latest created key entry from the database
+        lastKey = Key.objects.latest('time')
+        # get the name of the latest key holder
+        lastKeyHolder = lastKey.keyHolder
         updateKeyForm = UpdateKeyForm(data=request.POST)
         return render(request=request,
                       template_name='keyTracker/homepage.html',
-                      context={"updateKeyForm": updateKeyForm})
-
+                      context={"updateKeyForm": updateKeyForm, "lastKeyHolder": lastKeyHolder})
      # if not logged in, redirect to login page
     else:
         return redirect('keyTracker:login')
