@@ -1,6 +1,7 @@
 <div><a href="login">login</a></div>
 <div><a href="register">register</a></div>
 <div><a href="logout">logout</a></div>
+<div></div>
 <hr>
 <h1>This is the homepage</h1>
 <br>
@@ -8,7 +9,11 @@
 <div>logo</div>
 <br>
 <br>
-<div>'_____ has the key' or 'key is returned'</div> 
+{% if lastKeyHolder %}
+<div>'{{lastKeyHolder}} has the key</div> 
+{% else %}
+<div>key is returned</div>
+{% endif %}
 <br>
 <br>
 <form method="POST">
