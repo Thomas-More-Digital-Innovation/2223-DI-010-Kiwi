@@ -1,0 +1,23 @@
+<div><a href="login">login</a></div>
+<div><a href="register">register</a></div>
+<div><a href="logout">logout</a></div>
+<hr>
+<h1>This is the homepage</h1>
+<br>
+
+<div>logo</div>
+<br>
+<br>
+<div>'_____ has the key' or 'key is returned'</div> 
+<br>
+<br>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+        <button type="submit" name="taken">I took the key!</button>
+        <button type="submit" name="returned">I returned key!</button>
+    </form>
+
+
+
+{% comment %} <div><button>I took the key!</button></div> {% endcomment %}
