@@ -1,4 +1,17 @@
 a log of all key transfers and time
 
-owner -> new owner @ 02/05/2018 12:00:00
 
+
+<h1>History</h1>
+{% for key in keys %}
+<div> 
+    {% if not key.isReturned %}
+    {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}</div>
+    {% else %}
+    The key was returned on {{ key.time }}</div>
+    {% endif %}
+{% endfor %}
+<br>
+<hr>
+id, isReturned, keyHolder, keyHolder_id, time
+owner -> new owner @ 02/05/2018 12:00:00

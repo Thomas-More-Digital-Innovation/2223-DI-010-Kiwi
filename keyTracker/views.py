@@ -23,6 +23,7 @@ def homepage(request):
                     key.save()
                     return redirect("keyTracker:homepage")
                 if "returned" in request.POST:
+                    # TODO: check if the user has the key before they can return it
                     # The key is returned, set the keyHolder to None and isReturned to True
                     key = Key(keyHolder=None, isReturned=True)
                     key.save()
@@ -96,3 +97,11 @@ def logout_request(request):
     logout(request)
     messages.info(request, "Logged out successfully!")  # TODO messages
     return redirect("keyTracker:homepage")
+
+
+def history(request):
+    # get all keys from the database
+    keys = Key.objects.all()
+    return render(request=request,
+                  template_name='keyTracker/history.html',
+                  context={"keys": keys})
