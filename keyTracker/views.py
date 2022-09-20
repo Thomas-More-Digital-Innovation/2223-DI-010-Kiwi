@@ -11,32 +11,47 @@ from keyTracker.models import Key
 # Create your views here.
 
 
-def homepage(request):
-    # if logged in, redirect to login page
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            form = UpdateKeyForm(request.POST)
-            if form.is_valid():
-                if "taken" in request.POST:
-                    # create a new key and set the keyHolder to the current user, set isReturned to False
-                    key = Key(keyHolder=request.user, isReturned=False)
-                    key.save()
-                    return redirect("keyTracker:homepage")
-                if "returned" in request.POST:
-                    # TODO: check if the user has the key before they can return it
-                    # The key is returned, set the keyHolder to None and isReturned to True
-                    key = Key(keyHolder=None, isReturned=True)
-                    key.save()
+def is_member(user, group):
+    # check membership of a user in a group
+    return user.groups.filter(name=group).exists()
 
-        # get the latest created key entry from the database
-        lastKey = Key.objects.latest('time')
-        # get the name of the latest key holder
-        lastKeyHolder = lastKey.keyHolder
-        updateKeyForm = UpdateKeyForm(data=request.POST)
-        return render(request=request,
-                      template_name='keyTracker/homepage.html',
-                      context={"updateKeyForm": updateKeyForm, "lastKeyHolder": lastKeyHolder})
-     # if not logged in, redirect to login page
+
+def homepage(request):
+    # if user is not logged in, show login page
+    if not request.user.is_authenticated:
+        return redirect('keyTracker:login')
+    # user should be part of DI group, so not everyone can see who has the key
+    if not is_member(user=request.user, group='DI'):
+        return HttpResponse("Awaiting account validation")
+
+    if request.method == "POST":
+        form = UpdateKeyForm(request.POST)
+        if form.is_valid():
+            # KEY TAKEN
+            if "taken" in request.POST:
+                # create a new key and set the keyHolder to the current user, set isReturned to False
+                key = Key(keyHolder=request.user, isReturned=False)
+                key.save()
+                return redirect("keyTracker:homepage")
+            # KEY RETURNED
+            if "returned" in request.POST:
+                # check if the user has the key
+                if not Key.objects.latest('time').isReturned:
+                    key = Key(keyHolder=request.user, isReturned=True)
+                    key.save()
+                else:
+                    print(
+                        f"User {request.user} tried to return a key they don't have")
+                # TODO: messages
+
+            # get the latest created key entry from the database
+            lastKey = Key.objects.latest('time')
+            updateKeyForm = UpdateKeyForm(data=request.POST)
+            return render(request=request,
+                          template_name='keyTracker/homepage.html',
+                          context={"updateKeyForm": updateKeyForm,
+                                   "lastKey": lastKey,
+                                   })
     else:
         return redirect('keyTracker:login')
 
@@ -57,7 +72,7 @@ def register(request):
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
             return render(request=request,
-                          template_name="register",
+                          template_name="keyTrackerregister",
                           context={"form": form})
 
     # elif request.method == "GET":
@@ -100,8 +115,12 @@ def logout_request(request):
 
 
 def history(request):
-    # get all keys from the database
-    keys = Key.objects.all()
-    return render(request=request,
-                  template_name='keyTracker/history.html',
-                  context={"keys": keys})
+    if request.user.is_authenticated and is_member(user=request.user, group='DI'):
+        # get all keys from the database
+        keys = Key.objects.all().order_by('time')[:10]
+        # TODO: filter to only show n amount of keys (lazy load more)
+        return render(request=request,
+                      template_name='keyTracker/history.html',
+                      context={"keys": keys})
+    else:
+        return redirect('keyTracker:login')
