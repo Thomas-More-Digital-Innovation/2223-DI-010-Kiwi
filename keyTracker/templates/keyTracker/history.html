@@ -8,7 +8,8 @@ a log of all key transfers and time
     {% if not key.isReturned %}
     {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}</div>
     {% else %}
-    The key was returned on {{ key.time }}</div>
+    
+     {{ key.keyHolder_id }}. {{key.keyHolder}} returned the key on {{ key.time }}</div>
     {% endif %}
 {% endfor %}
 <br>

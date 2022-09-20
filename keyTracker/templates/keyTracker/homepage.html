@@ -1,19 +1,22 @@
+<h2>remove me </h2>
 <div><a href="login">login</a></div>
 <div><a href="register">register</a></div>
 <div><a href="logout">logout</a></div>
-<div><a href="history">history</a></div>
+
+
 <div></div>
 <hr>
 <h1>This is the homepage</h1>
 <br>
 
-<div>logo</div>
+<div><a href="history">logo</a></div>
 <br>
-<br>
-{% if lastKeyHolder %}
-<div>{{lastKeyHolder}} has the key</div> 
-{% else %}
+
+
+{% if lastKey.isReturned %}
 <div>key is returned</div>
+{% else %}
+<div>{{lastKey.keyHolder}} has the key</div> 
 {% endif %}
 <br>
 <br>
@@ -23,7 +26,4 @@
         <button type="submit" name="taken">I took the key!</button>
         <button type="submit" name="returned">I returned key!</button>
     </form>
-
-
-
 {% comment %} <div><button>I took the key!</button></div> {% endcomment %}
