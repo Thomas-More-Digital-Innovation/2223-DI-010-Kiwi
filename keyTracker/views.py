@@ -19,6 +19,7 @@ def is_member(user, group):
 def homepage(request):
     # if user is not logged in, show login page
     if not request.user.is_authenticated:
+        print("not logged in")
         return redirect('keyTracker:login')
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
@@ -45,15 +46,14 @@ def homepage(request):
                 # TODO: messages
 
             # get the latest created key entry from the database
-            lastKey = Key.objects.latest('time')
-            updateKeyForm = UpdateKeyForm(data=request.POST)
-            return render(request=request,
-                          template_name='keyTracker/homepage.html',
-                          context={"updateKeyForm": updateKeyForm,
-                                   "lastKey": lastKey,
-                                   })
-    else:
-        return redirect('keyTracker:login')
+    # if method is GET
+    lastKey = Key.objects.latest('time')
+    updateKeyForm = UpdateKeyForm(data=request.POST)
+    return render(request=request,
+                  template_name='keyTracker/homepage.html',
+                  context={"updateKeyForm": updateKeyForm,
+                           "lastKey": lastKey,
+                           })
 
 
 def register(request):
