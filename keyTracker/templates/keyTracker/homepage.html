@@ -1,36 +1,60 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
-  </head>
-  <body>
-    {% comment %} <h1 class="text-3xl font-bold underline"> {% endcomment %}
-      {% comment %} Hello world! {% endcomment %}
-    {% comment %} </h1> {% endcomment %}
+{% extends 'keyTracker/components/main.html' %}
+
+{% block body %}
+{% comment %} {% include 'keyTracker/components/nav.html' %} {% endcomment %}
 
 
-<h2>remove me </h2>
-<div><a href="login">login</a></div>
-<div><a href="register">register</a></div>
-<div><a href="logout">logout</a></div>
-
-<br>
-
-<div><a href="history">logo</a></div>
-<br>
+  <div class="bg-orange-900 h-96 w-96 m-10">
+    {% load static %}
+    <a href="history"><img src="{% static 'keyTracker/assets/logo.svg' %}" alt=""></a>
+  </div>
+  <br>
 
 
-{% if lastKey.isReturned %}
-<div>key is returned</div>
-{% else %}
-<div>{{lastKey.keyHolder}} has the key</div> 
-{% endif %}
-<br>
-<br>
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-        <button type="submit" name="taken">I took the key!</button>
-        <button type="submit" name="returned">I returned key!</button>
-    </form>
-{% comment %} <div><button>I took the key!</button></div> {% endcomment %}
+  
+  
+  {% if lastKey.isReturned %}
+  <div class="text-4xl">The key is returned</div>
+  {% else %}
+  <div class="text-4xl"><span class="text-green-400 font-bold">{{lastKey.keyHolder}}</span> has the key</div> 
+  {% endif %}
+  <br>
+  <br>
+  <form method="POST">
+    <div class="flex flex-col space-y-4">
+      {% csrf_token %}
+      {{form.as_div}}
+
+      {% comment %} if you have the key {% endcomment %}
+      {% if lastKey.keyHolder_id is user.id and not lastKey.isReturned %}
+        
+      <div class="">
+        <button class="bg-neutral-700 font-bold py-2 px-6 rounded w-max">I took the key!</button>
+      </div>
+
+      {% else %}
+      
+      <div class="">
+        <button class="bg-green-900 hover:bg-green-700 font-bold py-2 px-6  rounded w-max" type="submit" name="taken">I took the key!</button>
+      </div>
+      
+      {% endif %}
+      {% if lastKey.isReturned %}
+      
+      <div class="">
+        <button class="bg-neutral-700 font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
+      </div>
+
+      {% else %}
+
+      <div class="">
+        <button class="bg-green-700 hover:bg-green-900 font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
+      </div>
+      {% endif %}
+
+    </div>
+  </form>
+
+
+
+{% endblock body %}

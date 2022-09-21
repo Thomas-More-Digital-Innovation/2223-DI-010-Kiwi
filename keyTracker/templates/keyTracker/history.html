@@ -1,17 +1,19 @@
+{% extends 'keyTracker/components/main.html' %}
 
-<div><a href="/">homepage</a></div>
+{% block body %}
+
+<div class="underline"><a href="/">Back</a></div>
 
 <h1>History</h1>
-{% for key in keys %}
-<div> 
-    {% if not key.isReturned %}
-    {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}</div>
-    {% else %}
-    
-     {{ key.keyHolder_id }}. {{key.keyHolder}} returned the key on {{ key.time }}</div>
-    {% endif %}
-{% endfor %}
-<br>
-<hr>
-id, isReturned, keyHolder, keyHolder_id, time
-owner -> new owner @ 02/05/2018 12:00:00
+<div class="flex flex-col">
+    {% for key in keys %}
+    <div class="rounded my-1 p-2 bg-backgroundgreen"> 
+        {% if not key.isReturned %}
+        {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}</div>
+        {% else %}
+        
+        The key was returned on {{ key.time }}</div>
+        {% endif %}
+        {% endfor %}
+</div>      
+        {% endblock body %}
