@@ -1,6 +1,10 @@
 <nav>
-    <div><a href="login">login</a></div>
-    <div><a href="register">register</a></div>
-    <div><a href="logout">logout</a></div>
-    <p>Hello {{ user.get_username }}!</p>
+    <div class="flex items-end">
+        <div class="flex ">
+            <p>Hello {{ user.get_username }}!</p>
+        </div>
+        <div>
+            <a href="logout">logout</a>
+        </div>
+    </div>
 </nav>

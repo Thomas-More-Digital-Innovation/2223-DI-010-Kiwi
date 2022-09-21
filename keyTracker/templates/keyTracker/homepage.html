@@ -3,15 +3,11 @@
 {% block body %}
 {% comment %} {% include 'keyTracker/components/nav.html' %} {% endcomment %}
 
-
   <div class="bg-orange-900 h-96 w-96 m-10">
     {% load static %}
     <a href="history"><img src="{% static 'keyTracker/assets/logo.svg' %}" alt=""></a>
   </div>
-  <br>
-
-
-  
+  <br>  
   
   {% if lastKey.isReturned %}
   <div class="text-4xl">The key is returned</div>

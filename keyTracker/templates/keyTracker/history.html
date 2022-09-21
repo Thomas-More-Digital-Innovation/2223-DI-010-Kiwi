@@ -2,9 +2,11 @@
 
 {% block body %}
 
-<div class="underline"><a href="/">Back</a></div>
-
-<h1>History</h1>
+<div class="underline my-3"><a href="/">Back</a></div>
+    
+<div class="text-3xl my-3">
+    <h1>History</h1>
+</div>
 <div class="flex flex-col">
     {% for key in keys %}
     <div class="rounded my-1 p-2 bg-backgroundgreen"> 
@@ -16,4 +18,8 @@
         {% endif %}
         {% endfor %}
 </div>      
-        {% endblock body %}
+
+<div>
+
+</div>
+{% endblock body %}
