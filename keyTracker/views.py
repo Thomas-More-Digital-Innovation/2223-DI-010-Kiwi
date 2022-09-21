@@ -117,7 +117,7 @@ def logout_request(request):
 def history(request):
     if request.user.is_authenticated and is_member(user=request.user, group='DI'):
         # get all keys from the database
-        keys = Key.objects.all().order_by('time')[:10]
+        keys = Key.objects.all().order_by('-time')[:12]
         # TODO: filter to only show n amount of keys (lazy load more)
         return render(request=request,
                       template_name='keyTracker/history.html',

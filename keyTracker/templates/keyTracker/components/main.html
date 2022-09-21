@@ -11,11 +11,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="bg-gradient-to-br from-backgroundgreen to-green-900">
+<body class="bg-backgroundcolor">
   
-  <div class="flex flex-col h-screen place-items-center">
+  {% include "./nav.html" %}
 
-{% include "./nav.html" %}
+
+
 {% block body %}
 {% endblock %}
 </div>

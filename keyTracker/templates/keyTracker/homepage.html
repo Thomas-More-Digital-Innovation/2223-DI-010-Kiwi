@@ -2,8 +2,8 @@
 
 {% block body %}
 {% comment %} {% include 'keyTracker/components/nav.html' %} {% endcomment %}
-
-  <div class="bg-orange-900 h-96 w-96 m-10">
+<div class="flex flex-col h-screen place-items-center">
+  <div class="border-b-2 border-brownsugar h-96 w-96 m-10">
     {% load static %}
     <a href="history"><img src="{% static 'keyTracker/assets/logo.svg' %}" alt=""></a>
   </div>
@@ -12,7 +12,12 @@
   {% if lastKey.isReturned %}
   <div class="text-4xl">The key is returned</div>
   {% else %}
-  <div class="text-4xl"><span class="text-green-400 font-bold">{{lastKey.keyHolder}}</span> has the key</div> 
+    {% if lastKey.keyHolder_id is user.id %}
+    <div class="text-4xl"><span class="text-maingreen font-bold">You</span> have the key</div> 
+
+    {% else %}
+      <div class="text-4xl"><span class="text-maingreen font-bold">{{lastKey.keyHolder}}</span> has the key</div> 
+    {% endif %}
   {% endif %}
   <br>
   <br>
@@ -25,32 +30,30 @@
       {% if lastKey.keyHolder_id is user.id and not lastKey.isReturned %}
         
       <div class="">
-        <button class="bg-neutral-700 font-bold py-2 px-6 rounded w-max">I took the key!</button>
+        <button class="bg-darkgreen font-bold py-2 px-6 rounded w-max">I took the key!</button>
       </div>
 
       {% else %}
       
       <div class="">
-        <button class="bg-green-900 hover:bg-green-700 font-bold py-2 px-6  rounded w-max" type="submit" name="taken">I took the key!</button>
+        <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold py-2 px-6  rounded w-max" type="submit" name="taken">I took the key!</button>
       </div>
       
       {% endif %}
       {% if lastKey.isReturned %}
       
       <div class="">
-        <button class="bg-neutral-700 font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
+        <button class="bg-darkgreen font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
       </div>
 
       {% else %}
 
       <div class="">
-        <button class="bg-green-700 hover:bg-green-900 font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
+        <button class="bg-maingreen hover:bg-accentgreen font-bold py-2 px-6 rounded w-max" type="submit" name="returned">I returned key!</button>
       </div>
       {% endif %}
 
     </div>
   </form>
-
-
-
+</div>
 {% endblock body %}

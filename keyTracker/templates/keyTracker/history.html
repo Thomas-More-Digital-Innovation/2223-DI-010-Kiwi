@@ -1,25 +1,27 @@
 {% extends 'keyTracker/components/main.html' %}
 
 {% block body %}
-
-<div class="underline my-3"><a href="/">Back</a></div>
+<div class="flex flex-col h-screen place-items-center">
+<div class="underline my-3 flex flex-row">
+    <a href="/">Back</a>
+</div>
     
 <div class="text-3xl my-3">
     <h1>History</h1>
 </div>
-<div class="flex flex-col">
-    {% for key in keys %}
-    <div class="rounded my-1 p-2 bg-backgroundgreen"> 
-        {% if not key.isReturned %}
-        {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}</div>
-        {% else %}
-        
-        The key was returned on {{ key.time }}</div>
-        {% endif %}
-        {% endfor %}
-</div>      
-
-<div>
-
+<div class="relative">
+    <div class="h-48 bg-gradient-to-b from-backgroundcolor to-transparent w-full absolute z-10"></div>
+    <div class="flex flex-col">
+        {% for key in keys reversed  %}
+        <div class="rounded my-1 p-2 bg-backgroundgreen">
+            {% if not key.isReturned %}
+                {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}
+            </div>
+            {% else %}
+                The key was returned on {{ key.time }}
+            </div>
+            {% endif %}
+            {% endfor %}
+    </div>
 </div>
 {% endblock body %}

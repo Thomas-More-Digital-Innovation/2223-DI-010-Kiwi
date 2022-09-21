@@ -1,10 +1,9 @@
-<nav>
-    <div class="flex items-end">
-        <div class="flex ">
-            <p>Hello {{ user.get_username }}!</p>
-        </div>
-        <div>
-            <a href="logout">logout</a>
-        </div>
-    </div>
+<nav class="p-4">
+<div class="flex items-center justify-center">
+  <div class="flex-1"></div>
+  <div class="text-brownsugar">{{ user.get_username }}</div>
+  <div class="flex-1">
+    <div class="w-max ml-auto underline text-brownsugar"><a href="{% url 'keyTracker:logout' %}">logout</a></div>
+  </div>
+</div>
 </nav>
