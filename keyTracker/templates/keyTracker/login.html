@@ -1,10 +1,15 @@
-<h1>login page here</h1>
+{% extends 'keyTracker/components/main.html' %}
 
-<div class="container">
-    <form method="POST">
+{% block body %}
+
+<div class="container flex flex-col place-items-center h-screen">
+    <form method="POST" class="space-y-3 flex flex-col place-items-center">
     {% csrf_token %}
     {{form.as_p}}
-        <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
+        <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold py-2 px-6  rounded w-max"type="submit">Login</button>
     </form>
-    Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!
+    <div class="py-4"> 
+        Don't have an account? <a href="/register" target="blank"><strong>register here!</strong></a>
+    </div>
 </div>
+{% endblock body %}
