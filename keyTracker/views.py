@@ -24,12 +24,17 @@ def homepage(request):
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
         return HttpResponse("Awaiting account validation")
+    # get the last key entry from the database
+    lastKey = Key.objects.latest('time')
 
     if request.method == "POST":
         form = UpdateKeyForm(request.POST)
         if form.is_valid():
             # KEY TAKEN
             if "taken" in request.POST:
+                if lastKey.keyHolder_id is request.user.id:
+                    print(
+                        f"user {request.user.username} tried to take a key they already have")
                 # create a new key and set the keyHolder to the current user, set isReturned to False
                 key = Key(keyHolder=request.user, isReturned=False)
                 key.save()
@@ -37,7 +42,7 @@ def homepage(request):
             # KEY RETURNED
             if "returned" in request.POST:
                 # check if the user has the key
-                if not Key.objects.latest('time').isReturned and Key.objects.latest('time').keyHolder_id is request.user.id:
+                if not lastKey.isReturned and lastKey.keyHolder_id is request.user.id:
                     key = Key(keyHolder=request.user, isReturned=True)
                     key.save()
                 else:
@@ -47,7 +52,7 @@ def homepage(request):
 
             # get the latest created key entry from the database
     # if method is GET
-    lastKey = Key.objects.latest('time')
+
     updateKeyForm = UpdateKeyForm(data=request.POST)
     return render(request=request,
                   template_name='keyTracker/homepage.html',

@@ -1,6 +1,6 @@
 {% extends 'keyTracker/components/main.html' %}
 {% block body %}
-<h1>Register page here</h1>
+<h1>Register</h1>
 <div>
     <p>
         {% if user.is_authenticated %}
@@ -14,8 +14,9 @@
 <form method="POST">
     {% csrf_token %}
     {{form}}
-    <button type="submit">Sign Up</button>
+    <br>
+    <button type="submit" class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold py-2 px-6  rounded w-max">Sign Up</button>
 </form>
-
-If you already have an account <a href="/login" target="blank"><strong>login</strong></a> instead.
+<br>
+If you already have an account <a href="/login" target="blank"><strong class="underline text-brownsugar">login</strong></a> instead.
 {% endblock body %}

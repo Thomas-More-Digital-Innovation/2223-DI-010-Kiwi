@@ -30,6 +30,7 @@
       {% if lastKey.keyHolder_id is user.id and not lastKey.isReturned %}
         
       <div class="">
+        {% comment %}This button has no subit because you don't need to take the key if you already have it{% endcomment %}
         <button class="bg-darkgreen font-bold py-2 px-6 rounded w-max">I took the key!</button>
       </div>
 
