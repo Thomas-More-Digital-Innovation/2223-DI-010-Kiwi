@@ -37,7 +37,7 @@ def homepage(request):
             # KEY RETURNED
             if "returned" in request.POST:
                 # check if the user has the key
-                if not Key.objects.latest('time').isReturned:
+                if not Key.objects.latest('time').isReturned and Key.objects.latest('time').keyHolder_id is request.user.id:
                     key = Key(keyHolder=request.user, isReturned=True)
                     key.save()
                 else:
@@ -72,7 +72,7 @@ def register(request):
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
             return render(request=request,
-                          template_name="keyTrackerregister",
+                          template_name="keyTracker/register.html",
                           context={"form": form})
 
     # elif request.method == "GET":
