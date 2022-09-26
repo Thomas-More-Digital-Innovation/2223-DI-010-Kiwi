@@ -6,7 +6,7 @@ Kiwi, like the bird not the fruit, is a webapp that keeps track of who has one c
 
 ## To run the development server do
 
-~~~
+~~~python
 python3 manage.py runserver
 ~~~
 
@@ -26,3 +26,9 @@ keyTracker/static/keyTracker/css/input.css  -o keyTracker/static/keyTracker/css/
  ~~~shell
 ./tailwindcss-linux -i keyTracker/static/keyTracker/css/input.css -o keyTracker/static/keyTracker/css/output.css --watch
  ~~~
+
+# How it works
+
+## sign up
+
+When a user signs up, they enter a username, email, rnumber and password. They then need to be verified by the admin. The admin can do this by going to the django admin page and adding the newly created user to the group "DI". The user can then log in and use the app.

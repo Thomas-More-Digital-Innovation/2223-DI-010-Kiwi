@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from keyTracker.forms import *
 from keyTracker.models import Key
+
 # Create your views here.
 
 
@@ -24,6 +25,7 @@ def homepage(request):
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
         return HttpResponse("Awaiting account validation")
+
     # get the last key entry from the database
     lastKey = Key.objects.latest('time')
 
@@ -48,11 +50,8 @@ def homepage(request):
                 else:
                     print(
                         f"User {request.user} tried to return a key they don't have")
-                # TODO: messages
 
-            # get the latest created key entry from the database
     # if method is GET
-
     updateKeyForm = UpdateKeyForm(data=request.POST)
     return render(request=request,
                   template_name='keyTracker/homepage.html',
