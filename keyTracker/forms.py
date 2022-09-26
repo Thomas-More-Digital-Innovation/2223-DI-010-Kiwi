@@ -1,12 +1,25 @@
 from django import forms
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 class UpdateKeyForm(forms.Form):
     pass
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.TextField(max_length=500, blank=True)
+class NewUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    rnumber = forms.CharField(required=True, max_length=7)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "rnumber", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.rnumber = self.cleaned_data['rnumber']
+        if commit:
+            user.save()
+        return user

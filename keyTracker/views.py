@@ -63,8 +63,7 @@ def homepage(request):
 
 def register(request):
     if request.method == "POST":
-        print("POST")
-        form = UserCreationForm(request.POST)
+        form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -81,7 +80,7 @@ def register(request):
                           context={"form": form})
 
     # elif request.method == "GET":
-    form = UserCreationForm
+    form = NewUserForm()
     return render(request=request,
                   template_name="keyTracker/register.html",
                   context={"form": form}
