@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from keyTracker.forms import *
 from keyTracker.models import Key
+from django.urls import reverse_lazy
+from django.views import generic
 
 # Create your views here.
 
@@ -58,6 +60,12 @@ def homepage(request):
                   context={"updateKeyForm": updateKeyForm,
                            "lastKey": lastKey,
                            })
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
 
 def register(request):
