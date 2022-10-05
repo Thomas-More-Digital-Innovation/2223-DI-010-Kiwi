@@ -21,7 +21,7 @@ def homepage(request):
     # if user is not logged in, show login page
     if not request.user.is_authenticated:
         print("not logged in")
-        return redirect('keyTracker:login')
+        return redirect('keyTracker:homepage')
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
         return HttpResponse("Awaiting account validation")
@@ -126,4 +126,4 @@ def history(request):
                       template_name='keyTracker/history.html',
                       context={"keys": keys})
     else:
-        return redirect('keyTracker:login')
+        return redirect('keyTracker:homepage')
