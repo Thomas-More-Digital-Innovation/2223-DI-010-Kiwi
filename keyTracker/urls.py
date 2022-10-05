@@ -20,8 +20,10 @@ app_name = "keyTracker"
 
 urlpatterns = [
     path("", views.homepage, name='homepage'),
-    path("register/", views.register, name="register"),
-    path("logout/", views.logout_request, name="logout"),
-    path("login/", views.login_request, name="login"),
     path("history/", views.history, name="history"),
+    # path("register/", views.register, name="register"),
+    # path("logout/", views.logout_request, name="logout"),
+    # path("login/", views.login_request, name="login"),
+
+
 ]
