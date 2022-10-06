@@ -6,6 +6,6 @@
   <button type="submit">Log In</button>
 </form>
 
-<p>don't have an account yet? <span class="underline"><a href="/signup">register here!</a></span></p>
+<p>don't have an account yet? <span class="underline"><a href="{% url "password_reset" %}">register here!</a></span></p>
 
 <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
