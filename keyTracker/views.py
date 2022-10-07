@@ -62,10 +62,10 @@ def homepage(request):
                            })
 
 
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+class RegisterView(generic.CreateView):
+    form_class = NewUserForm
     success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+    template_name = "registration/register.html"
 
 
 def register(request):
