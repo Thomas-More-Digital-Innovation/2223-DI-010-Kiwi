@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from keyTracker.forms import *
 from keyTracker.models import Key
+from django.urls import reverse_lazy
+from django.views import generic
 
 # Create your views here.
 
@@ -21,7 +23,7 @@ def homepage(request):
     # if user is not logged in, show login page
     if not request.user.is_authenticated:
         print("not logged in")
-        return redirect('keyTracker:login')
+        return redirect('login')
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
         return HttpResponse("Awaiting account validation")
@@ -58,6 +60,12 @@ def homepage(request):
                   context={"updateKeyForm": updateKeyForm,
                            "lastKey": lastKey,
                            })
+
+
+class RegisterView(generic.CreateView):
+    form_class = NewUserForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/register.html"
 
 
 def register(request):
@@ -126,4 +134,4 @@ def history(request):
                       template_name='keyTracker/history.html',
                       context={"keys": keys})
     else:
-        return redirect('keyTracker:login')
+        return redirect('keyTracker:homepage')
