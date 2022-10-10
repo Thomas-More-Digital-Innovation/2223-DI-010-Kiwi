@@ -1,0 +1,43 @@
+{% extends 'keyTracker/components/main.html' %}
+
+
+{% block body %}
+{% load static %}
+
+<div class="grid grid-cols-1 gap-4 mx-auto h-screen w-screen">
+
+    <div class="grid grid-cols-1 gap-4 mx-auto py-8">
+
+        <div class="">
+            <img class="h-48 overflow-visible" src="{% static 'keyTracker/assets/logo.svg' %}" alt="">
+        </div>
+
+        <div class="row-span-6">
+            <p class="text-center text-5xl text-maingreen font-thin">Kiwi</p>
+        </div>
+
+        <div class="flex">
+            <div class="mx-auto mt-auto ">
+                <img src="{% static 'keyTracker/assets/githubLogo.png' %}" alt="">
+                <p class="underline text-center my-4"><a href="{% url 'social:begin' 'github' %}">Login with GitHub</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+<div class="flex w-screen">
+    <div class="mx-auto pt-8 pb-16">
+        <img class="pb-16 h-64 overflow-visible" src="{% static 'keyTracker/assets/logo.svg' %}" alt="">
+        <p class="text-center text-5xl text-maingreen">Kiwi</p>
+    </div>
+</div>
+<div class="flex w-screen">
+    <div class="m-auto flex flex-col items-center">
+
+        <img src="{% static 'keyTracker/assets/githubLogo.png' %}" alt="">
+        <p class="underline text-center my-4"><a href="{% url 'social:begin' 'github' %}">Login with GitHub</a></p>
+    </div>
+</div>
+{% endblock body %} -->
