@@ -19,7 +19,7 @@ from django.urls import path, include, re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include('keyTracker.urls')),
-    path("accounts/", include('keyTracker.urls')),  # is this necessary still?
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path("accounts/", include('keyTracker.urls')),  # is this necessary still?
+    # path('accounts/', include('django.contrib.auth.urls')),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 ]

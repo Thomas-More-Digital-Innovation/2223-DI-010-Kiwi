@@ -15,7 +15,7 @@
         {% for key in keys reversed  %}
         <div class="rounded my-1 p-2 bg-backgroundgreen">
             {% if not key.isReturned %}
-                {{ key.keyHolder_id }}. {{ key.keyHolder }} took the key on {{ key.time }}
+                {{ key.keyHolder }} took the key on {{ key.time }}
             </div>
             {% else %}
                 The key was returned on {{ key.time }}
