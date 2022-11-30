@@ -33,25 +33,33 @@ def homepage(request):
 
     if request.method == "POST":
         form = UpdateKeyForm(request.POST)
+        print(f"post: {request.POST}")
         if form.is_valid():
             # KEY TAKEN
             if "taken" in request.POST:
+                print("TAKEN")
                 if lastKey.keyHolder_id is request.user.id:
+                    # print(f"lastKey.keyHolder_id {lastKey.keyHolder_id}")
+                    # print(f"request.user.id {request.user.id}")
                     print(
                         f"user {request.user.username} tried to take a key they already have")
+                    return redirect("keyTracker:homepage")
                 # create a new key and set the keyHolder to the current user, set isReturned to False
                 key = Key(keyHolder=request.user, isReturned=False)
                 key.save()
                 return redirect("keyTracker:homepage")
             # KEY RETURNED
             if "returned" in request.POST:
+                print("RETURNED")
                 # check if the user has the key
                 if not lastKey.isReturned and lastKey.keyHolder_id is request.user.id:
-                    key = Key(keyHolder=request.user, isReturned=True)
+                    # key = Key(keyHolder=request.user, isReturned=True)
+                    key = Key(keyHolder=None, isReturned=True)
                     key.save()
                 else:
                     print(
                         f"User {request.user} tried to return a key they don't have")
+                return redirect("keyTracker:homepage")
 
     # if method is GET
     updateKeyForm = UpdateKeyForm(data=request.POST)
@@ -60,38 +68,6 @@ def homepage(request):
                   context={"updateKeyForm": updateKeyForm,
                            "lastKey": lastKey,
                            })
-
-
-# class RegisterView(generic.CreateView):
-#     form_class = NewUserForm
-#     success_url = reverse_lazy("login")
-#     template_name = "registration/register.html"
-
-
-# def register(request):
-#     if request.method == "POST":
-#         form = NewUserForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             username = form.cleaned_data.get('username')
-#             messages.success(request, f"New account created: {username}")
-#             login(request, user)
-#             return redirect("keyTracker:homepage")
-
-#         else:
-#             for msg in form.error_messages:
-#                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
-
-#             return render(request=request,
-#                           template_name="keyTracker/register.html",
-#                           context={"form": form})
-
-#     # elif request.method == "GET":
-#     form = NewUserForm()
-#     return render(request=request,
-#                   template_name="keyTracker/register.html",
-#                   context={"form": form}
-#                   )
 
 
 def login_request(request):
@@ -137,3 +113,41 @@ def history(request):
                       context={"keys": keys})
     else:
         return redirect('keyTracker:homepage')
+
+
+# make a view to dashboard
+def dashboard(request):
+    return render(request=request,
+                  template_name='keyTracker/dashboard.html',
+                  context={})
+
+# class RegisterView(generic.CreateView):
+#     form_class = NewUserForm
+#     success_url = reverse_lazy("login")
+#     template_name = "registration/register.html"
+
+
+# def register(request):
+#     if request.method == "POST":
+#         form = NewUserForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             username = form.cleaned_data.get('username')
+#             messages.success(request, f"New account created: {username}")
+#             login(request, user)
+#             return redirect("keyTracker:homepage")
+
+#         else:
+#             for msg in form.error_messages:
+#                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
+
+#             return render(request=request,
+#                           template_name="keyTracker/register.html",
+#                           context={"form": form})
+
+#     # elif request.method == "GET":
+#     form = NewUserForm()
+#     return render(request=request,
+#                   template_name="keyTracker/register.html",
+#                   context={"form": form}
+#                   )

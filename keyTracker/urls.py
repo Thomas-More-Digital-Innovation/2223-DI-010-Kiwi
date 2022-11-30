@@ -21,6 +21,7 @@ app_name = "keyTracker"
 urlpatterns = [
     path("", views.homepage, name='homepage'),
     path("history/", views.history, name="history"),
+    path("dashboard/", views.dashboard, name="dashboard"),
     # path("register/", views.RegisterView.as_view(), name="register"),
     path("login/", views.login_request, name="login"),
 

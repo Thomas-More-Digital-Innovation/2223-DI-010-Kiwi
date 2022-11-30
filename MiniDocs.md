@@ -27,13 +27,13 @@ keyTracker/static/keyTracker/css/input.css  -o keyTracker/static/keyTracker/css/
 ./tailwindcss-linux -i keyTracker/static/keyTracker/css/input.css -o keyTracker/static/keyTracker/css/output.css --watch
  ~~~
 
-# How it works
+## How it works
 
-## sign up
+### sign up
 
 When a user signs up, they enter a username, email, rnumber and password. They then need to be verified by the admin. The admin can do this by going to the django admin page and adding the newly created user to the group "DI". The user can then log in and use the app.
 
-## Templates
+## #Templates
 
 There are two template folders in the project. One in the KeyTracker app and one in the main project folder. The templates in the KeyTracker app are for the app itself. The templates in the main project folder are there to override the default login, signup, passzord reset and other auth pages.
 
