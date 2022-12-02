@@ -117,9 +117,21 @@ def history(request):
 
 # make a view to dashboard
 def dashboard(request):
+    # get all uwers that are in the DI group
+    activeUsers = User.objects.filter(groups__name='DI')
+    # get all users that are not in the DI group
+    pendingUsers = User.objects.exclude(groups__name='DI')
+
+    allUsers = User.objects.all()
+
+    print(f"aU: {activeUsers}")
+    print(f"pU: {pendingUsers}")
+    # print(f"allU: {allUsers}")
+
     return render(request=request,
                   template_name='keyTracker/dashboard.html',
-                  context={})
+                  context={"activeUsers": activeUsers,
+                           "pendingUsers": pendingUsers})
 
 # class RegisterView(generic.CreateView):
 #     form_class = NewUserForm

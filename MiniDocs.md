@@ -17,8 +17,7 @@ python3 manage.py runserver
 ## Windows
 
  ~~~ps1
-./tailwindcss.exe -i 
-keyTracker/static/keyTracker/css/input.css  -o keyTracker/static/keyTracker/css/output.css --watch
+./tailwindcss.exe -i keyTracker/static/keyTracker/css/input.css -o keyTracker/static/keyTracker/css/output.css --watch
  ~~~
 
 ## Linux

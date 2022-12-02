@@ -1,9 +1,19 @@
 <nav class="p-4">
-<div class="flex items-center justify-center">
-  <div class="flex-1"></div>
-  <div class="text-brownsugar">{{ user.get_username }}</div>
+<div class="flex items-center justify-center text-brownsugar">
+  <div class="flex-1 underline">
+    {% comment %} make sure user is staff {% endcomment %}
+    {% if user.is_staff %}
+      {% comment %} route to homepage if "toHome" is "True" {% endcomment %}
+      {% if "homepage" in link %}
+        <a href="{% url 'keyTracker:homepage' %}">Home</a>
+      {% elif "dashboard" in link %}
+        <a href="{% url 'keyTracker:dashboard' %}">Dashboard</a>
+        {% endif %}
+    {% endif %}
+  </div>
+  <div>{{ user.get_username }}</div>
   <div class="flex-1">
-    <div class="w-max ml-auto underline text-brownsugar"><a href="{% url 'keyTracker:logout' %}">logout</a></div>
+    <div class="w-max ml-auto underline "><a href="{% url 'keyTracker:logout' %}">logout</a></div>
   </div>
 </div>
 </nav>

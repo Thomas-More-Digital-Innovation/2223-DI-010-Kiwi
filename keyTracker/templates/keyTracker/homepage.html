@@ -1,7 +1,7 @@
 {% extends 'keyTracker/components/main.html' %}
 
 {% block body %}
-{% include 'keyTracker/components/nav.html' %}
+{% include 'keyTracker/components/nav.html' with link="dashboard" %}
 <div class="flex flex-col  place-items-center">
   <div class="border-b-2 border-brownsugar h-96 w-96 m-10">
     {% load static %}
