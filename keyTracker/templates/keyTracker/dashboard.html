@@ -2,43 +2,44 @@
 
 {% block body %}
 {% include 'keyTracker/components/nav.html' with link="homepage"%}
-<ul>
-    <li>
-        list of current users with delete buttons
-    </li>
-    <li>
-        list of new applications with accept and reject buttons
-    </li>
-</ul>
-<br>
 <div>
-
-    {% comment %} IF NEW REQUESTS {% endcomment %}
-    <div>
-    <h2 class="font-bold">New requests</h2>
-    <div class="grid grid-cols-2">
-        {% for pendingUser in pendingUsers %}
+    {% if pending_users %}
         <div>
-            {{pendingUser.username}}
-        </div>
-        <div>
-            accept / 
-            reject
-        </div>
-        {% endfor %}
-    </div>
-    
-    
-</div>
-<div>
-    <h2 class="font-bold">Current Users</h2>
-    <div class="grid">
-            {% for activeUser in activeUsers %}
-            <div>
-                {{activeUser.username}}
-            </div>
+            <h2 class="font-bold">New requests</h2>
+            <div class="grid grid-cols-2">
+            {% for pending_user in pending_users %}
+                <div>
+                    {{pending_user.username}}
+                </div>
+                <div>
+                    <form method="POST" action="{% url 'keyTracker:review_application' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="pending_user" value="{{pending_user}}">
+                        <input type="submit" name="verdict" value="accept" class="underline"> | 
+                        <input type="submit" name="verdict" value="deny" class="underline">
+                    </form>
+                </div>
             {% endfor %}
         </div>
+    {% endif %} 
+</div>
+<div>
+    <div>
+        <h2 class="font-bold">Current users</h2>
+        <div class="grid grid-cols-2">
+        {% for current_user in current_users %}
+            <div>
+                {{current_user.username}}
+            </div>
+            <div>
+                <form method="POST" action="{% url 'keyTracker:remove_user' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="current_user" value="{{current_user}}">
+                    <input type="submit" name="remove_btn" value="remove" class="underline">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

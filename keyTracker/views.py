@@ -1,15 +1,14 @@
-from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from keyTracker.forms import *
-from keyTracker.models import Key
 from django.urls import reverse_lazy
 from django.views import generic
+from keyTracker.forms import *
+from keyTracker.models import Key
 
 # Create your views here.
 
@@ -26,7 +25,8 @@ def homepage(request):
         return redirect('keyTracker:login')
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
-        return HttpResponse("Awaiting account validation")
+        return render(request=request,
+                      template_name='keyTracker/pending.html')
 
     # get the last key entry from the database
     lastKey = Key.objects.latest('time')
@@ -72,29 +72,10 @@ def homepage(request):
 
 def login_request(request):
     if request.user.is_authenticated:
+        # if already logged in, redirect to homepage
         messages.info(request, "You are already logged in.")
         return redirect('keyTracker:homepage')
-
-    # if request.method == 'POST':
-    #     form = AuthenticationForm(request=request, data=request.POST)
-    #     if form.is_valid():
-    #         username = form.cleaned_data.get('username')
-    #         password = form.cleaned_data.get('password')
-    #         user = authenticate(username=username, password=password)
-    #         if user is not None:
-    #             login(request, user)
-    #             messages.info(request, f"You are now logged in as {username}")
-    #             return redirect('keyTracker:homepage')
-    #         else:
-    #             messages.error(request, "Invalid username or password.")
-    #     else:
-    #         messages.error(request, "Invalid username or password.")
-    # form = AuthenticationForm()
-    return render(request=request,
-                  template_name="keyTracker/login.html",
-                  context={
-                      # "form": form
-                  })
+    return render(request=request, template_name="keyTracker/login.html",)
 
 
 def logout_request(request):
@@ -115,51 +96,51 @@ def history(request):
         return redirect('keyTracker:homepage')
 
 
-# make a view to dashboard
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def remove_user(request):
+    if request.method == "POST":
+        form = UserRemovalForm(request.POST)
+        if form.is_valid():
+            if "remove_btn" in request.POST:
+                user = User.objects.get(username=request.POST['current_user'])
+                user.delete()
+                return redirect("keyTracker:dashboard")
+    return redirect("keyTracker:dashboard")
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def review_application(request):
+    if request.method == "POST":
+        form = UserAcceptanceForm(request.POST)
+        if form.is_valid():
+            verdict = form.cleaned_data.get("verdict")
+            pending_user = form.cleaned_data.get("pending_user")
+            print(f"____recieved '{verdict}' for user: '{pending_user}'")
+            if verdict == "accept":
+                user = User.objects.get(username=pending_user)
+                user.groups.add(Group.objects.get(name='DI'))
+                user.save()
+                messages.info(
+                    request, f"User {pending_user} has been accepted")
+            elif verdict == "deny":
+                user = User.objects.get(username=pending_user)
+                user.delete()
+                messages.info(
+                    request, f"User {pending_user} has been denied")
+            else:
+                messages.info(request, "Something went wrong")
+        return redirect('keyTracker:dashboard')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
 def dashboard(request):
-    # get all uwers that are in the DI group
-    activeUsers = User.objects.filter(groups__name='DI')
+    # get all users that are in the DI group
+    current_users = User.objects.filter(groups__name='DI')
     # get all users that are not in the DI group
-    pendingUsers = User.objects.exclude(groups__name='DI')
-
-    allUsers = User.objects.all()
-
-    print(f"aU: {activeUsers}")
-    print(f"pU: {pendingUsers}")
-    # print(f"allU: {allUsers}")
-
+    pending_users = User.objects.exclude(groups__name='DI')
     return render(request=request,
                   template_name='keyTracker/dashboard.html',
-                  context={"activeUsers": activeUsers,
-                           "pendingUsers": pendingUsers})
-
-# class RegisterView(generic.CreateView):
-#     form_class = NewUserForm
-#     success_url = reverse_lazy("login")
-#     template_name = "registration/register.html"
-
-
-# def register(request):
-#     if request.method == "POST":
-#         form = NewUserForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             username = form.cleaned_data.get('username')
-#             messages.success(request, f"New account created: {username}")
-#             login(request, user)
-#             return redirect("keyTracker:homepage")
-
-#         else:
-#             for msg in form.error_messages:
-#                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
-
-#             return render(request=request,
-#                           template_name="keyTracker/register.html",
-#                           context={"form": form})
-
-#     # elif request.method == "GET":
-#     form = NewUserForm()
-#     return render(request=request,
-#                   template_name="keyTracker/register.html",
-#                   context={"form": form}
-#                   )
+                  context={"current_users": current_users,
+                           "pending_users": pending_users})

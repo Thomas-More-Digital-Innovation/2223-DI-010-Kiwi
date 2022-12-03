@@ -18,26 +18,12 @@
 
         <div class="flex">
             <div class="mx-auto mt-auto ">
+                <a href="{% url 'social:begin' 'github' %}">
                 <img src="{% static 'keyTracker/assets/githubLogo.png' %}" alt="">
-                <p class="underline text-center my-4"><a href="{% url 'social:begin' 'github' %}">Login with GitHub</a>
-                </p>
+                <p class="underline text-center my-4">Login with GitHub</p>
+                </a>
             </div>
         </div>
     </div>
 </div>
-
-<!-- 
-<div class="flex w-screen">
-    <div class="mx-auto pt-8 pb-16">
-        <img class="pb-16 h-64 overflow-visible" src="{% static 'keyTracker/assets/logo.svg' %}" alt="">
-        <p class="text-center text-5xl text-maingreen">Kiwi</p>
-    </div>
-</div>
-<div class="flex w-screen">
-    <div class="m-auto flex flex-col items-center">
-
-        <img src="{% static 'keyTracker/assets/githubLogo.png' %}" alt="">
-        <p class="underline text-center my-4"><a href="{% url 'social:begin' 'github' %}">Login with GitHub</a></p>
-    </div>
-</div>
-{% endblock body %} -->
+{% endblock %}

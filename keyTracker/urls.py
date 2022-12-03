@@ -24,7 +24,9 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     # path("register/", views.RegisterView.as_view(), name="register"),
     path("login/", views.login_request, name="login"),
-
+    path("remove_user/", views.remove_user, name="remove_user"),
+    path("review_application/", views.review_application,
+         name="review_application"),
     # path("register/", views.register, name="register"),
     path("logout/", views.logout_request, name="logout"),
 ]

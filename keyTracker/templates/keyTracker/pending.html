@@ -1,0 +1,16 @@
+{% extends 'keyTracker/components/main.html' %}
+
+{% block body %}
+{% include 'keyTracker/components/nav.html' with link="homepage"%}
+<div class="flex items-center justify-center h-screen">
+    <div>
+        <div class="font-semibold text-2xl text-brownsugar text-center">
+            Awaiting account validation
+        </div>
+        <div class="w-96 text-center mt-4">
+            Your application is under review, you'll get access as soon as you are accepted.
+        </div>
+    </div>
+</div>
+
+{% endblock %}
