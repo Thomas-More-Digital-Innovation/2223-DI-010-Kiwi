@@ -21,7 +21,6 @@ def is_member(user, group):
 def homepage(request):
     # if user is not logged in, show login page
     if not request.user.is_authenticated:
-        print("not logged in")
         return redirect('keyTracker:login')
     # user should be part of DI group, so not everyone can see who has the key
     if not is_member(user=request.user, group='DI'):
@@ -33,16 +32,12 @@ def homepage(request):
 
     if request.method == "POST":
         form = UpdateKeyForm(request.POST)
-        print(f"post: {request.POST}")
         if form.is_valid():
             # KEY TAKEN
             if "taken" in request.POST:
-                print("TAKEN")
                 if lastKey.keyHolder_id is request.user.id:
-                    # print(f"lastKey.keyHolder_id {lastKey.keyHolder_id}")
-                    # print(f"request.user.id {request.user.id}")
                     print(
-                        f"user {request.user.username} tried to take a key they already have")
+                        f"user {request.user.username} tried to take a key they already have")  # TODO: convert to msg
                     return redirect("keyTracker:homepage")
                 # create a new key and set the keyHolder to the current user, set isReturned to False
                 key = Key(keyHolder=request.user, isReturned=False)
@@ -50,7 +45,6 @@ def homepage(request):
                 return redirect("keyTracker:homepage")
             # KEY RETURNED
             if "returned" in request.POST:
-                print("RETURNED")
                 # check if the user has the key
                 if not lastKey.isReturned and lastKey.keyHolder_id is request.user.id:
                     # key = Key(keyHolder=request.user, isReturned=True)
@@ -58,7 +52,7 @@ def homepage(request):
                     key.save()
                 else:
                     print(
-                        f"User {request.user} tried to return a key they don't have")
+                        f"User {request.user} tried to return a key they don't have")  # TODO: convert to msg
                 return redirect("keyTracker:homepage")
 
     # if method is GET
@@ -108,6 +102,7 @@ def remove_user(request):
                 return redirect("keyTracker:dashboard")
     return redirect("keyTracker:dashboard")
 
+
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 def review_application(request):
@@ -116,7 +111,6 @@ def review_application(request):
         if form.is_valid():
             verdict = form.cleaned_data.get("verdict")
             pending_user = form.cleaned_data.get("pending_user")
-            print(f"____recieved '{verdict}' for user: '{pending_user}'")
             if verdict == "accept":
                 user = User.objects.get(username=pending_user)
                 user.groups.add(Group.objects.get(name='DI'))
