@@ -1,54 +1,56 @@
 {% extends 'keyTracker/components/main.html' %}
-
+{% load static %}
 {% block body %}
 {% include 'keyTracker/components/nav.html' with link="homepage"%}
 <div>
 
 <div class="flex justify-center">
-
-
-<div class="mx-4 bsg-white">
-    {% if pending_users %}
-    <div>
-        <h2 class="text-3xl my-3">New requests</h2>
-        <div class="grid grid-cols-2">
-            {% for pending_user in pending_users %}
-            <div>
-                {{pending_user.username}}
-            </div>
-            <div>
-                <form method="POST" action="{% url 'keyTracker:review_application' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="pending_user" value="{{pending_user}}">
-                        <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold w-24 py-2 px-6 mx-5 my-2 rounded" type="submit" name="verdict" value="accept">accept</button>
-                        {% comment %} <input type="submit" name="verdict" value="accept" class="underline"> | {% endcomment %}
-                        {% comment %} <input type="submit" name="verdict" value="deny" class="underline"> {% endcomment %}
-                        <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5  my-2 rounded" type="submit" name="verdict" value="deny">deny</button>
-                </form>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-    <div>
-        <h2 class="text-3xl my-3">Current users</h2>
-        <div class="grid grid-cols-2">
-            {% for current_user in current_users %}
-            <div>
-                {{current_user.username}}
-            </div>
-            <div>
-                <form method="POST" action="{% url 'keyTracker:remove_user' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="current_user" value="{{current_user}}">
-                    {% comment %} <input type="submit" name="remove_btn" value="remove" class="underline"> {% endcomment %}
-                    <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5 rounded w-max" type="submit" name="remove_btn" value="remove">remove</button>
-                </form>
-            </div>
-            {% endfor %}
+    <div class="mx-4">
+        {% if pending_users %}
+        <div>
+            <h2 class="text-3xl my-3">New requests</h2>
+            <div class="grid grid-cols-2 gap-5">
+                {% for pending_user in pending_users %}
+                <div class="flex my-auto">
+                    {{pending_user.username}}
+                </div>
+                <div>
+                    <form method="POST" action="{% url 'keyTracker:review_application' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="pending_user" value="{{pending_user}}">
+                            <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold w-24 py-2 px-6 mx-5 my-2 rounded" type="submit" name="verdict" value="accept">accept</button>
+                            {% comment %} <input type="submit" name="verdict" value="accept" class="underline"> | {% endcomment %}
+                            {% comment %} <input type="submit" name="verdict" value="deny" class="underline"> {% endcomment %}
+                            <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5  my-2 rounded" type="submit" name="verdict" value="deny">deny</button>
+                    </form>
+                </div>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
+        <div>
+            <h2 class="text-3xl my-3">Current users</h2>
+            <div class="grid grid-cols-2 gap-5">
+                {% for current_user in current_users %}
+                <div class="flex my-auto">
+                    {% if current_user.is_superuser %}
+                    <div class="flex my-auto pr-3">
+                        <img src="{% static 'keyTracker/assets/crown.svg' %}" alt="admin" width="20">
+                    </div>
+                    {% endif %}
+                    {{current_user.username}}
+                </div>
+                <div>
+                    <form method="POST" action="{% url 'keyTracker:remove_user' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="current_user" value="{{current_user}}">
+                        <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5 rounded" type="submit" name="remove_btn" value="remove">remove</button>
+                    </form>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
