@@ -18,10 +18,10 @@
                     <form method="POST" action="{% url 'keyTracker:review_application' %}">
                         {% csrf_token %}
                         <input type="hidden" name="pending_user" value="{{pending_user}}">
-                            <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold w-24 py-2 px-6 mx-5 my-2 rounded" type="submit" name="verdict" value="accept">accept</button>
+                            <button class="bg-maingreen hover:bg-accentgreen drop-shadow-md font-bold w-24 py-2 rounded" type="submit" name="verdict" value="accept">accept</button>
                             {% comment %} <input type="submit" name="verdict" value="accept" class="underline"> | {% endcomment %}
                             {% comment %} <input type="submit" name="verdict" value="deny" class="underline"> {% endcomment %}
-                            <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5  my-2 rounded" type="submit" name="verdict" value="deny">deny</button>
+                            <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 rounded" type="submit" name="verdict" value="deny">deny</button>
                     </form>
                 </div>
                 {% endfor %}
@@ -44,7 +44,7 @@
                     <form method="POST" action="{% url 'keyTracker:remove_user' %}">
                         {% csrf_token %}
                         <input type="hidden" name="current_user" value="{{current_user}}">
-                        <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 px-6 mx-5 rounded" type="submit" name="remove_btn" value="remove">remove</button>
+                        <button class="bg-warningred hover:bg-warningredhover drop-shadow-md font-bold w-24 py-2 rounded" type="submit" name="remove_btn" value="remove">remove</button>
                     </form>
                 </div>
                 {% endfor %}

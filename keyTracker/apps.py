@@ -11,14 +11,15 @@ class KeytrackerConfig(AppConfig):
 
         queryset = Key.objects.filter(id=1)
 
+        # making sure there is at least one key in the db
         if queryset:
-            print("Key table not empty")
+            print("apps.py: Key table not empty")
         else:
-            print("Key table empty")
-            print("making new key object")
+            print("apps.py: Key table empty")
+            print("apps.py: making new key object")
             key = Key(keyHolder=None, isReturned=True)
             key.save()
-            print(f"Key.objects: {Key.objects}")
-            print("added starterkey")
+            print(f"apps.py: Key.objects: {Key.objects}")
+            print("apps.py: added starterkey")
 
-        print("Startup code ran")
+        print("apps.py: Startup code ran")
