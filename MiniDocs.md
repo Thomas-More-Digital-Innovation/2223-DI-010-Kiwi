@@ -40,4 +40,6 @@ There are two template folders in the project. One in the KeyTracker app and one
 
 ### Add login using GitHub
 
-Login is now handled internally, but I would like to make the use of the app as easy as possible. Having users not have to create an account would be a good start. I would like to add the ability to login using GitHub. This would require the user to have a GitHub account, but normally speaking, ITF students already have one.
+Github authentication was chosen because all students normally have a github account. Using their Thomas More / school account might have been even easier but required the use of Active Directory. Creating another Active Directory within the Thomas More organization was not possible.
+
+Python Social Auth is used for github authentication. More info about it can be found here: <https://python-social-auth.readthedocs.io/en/latest/backends/github.html>
