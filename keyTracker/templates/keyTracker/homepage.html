@@ -2,10 +2,16 @@
 
 {% block body %}
 {% include 'keyTracker/components/nav.html' with link="dashboard" %}
-<div class="flex flex-col  place-items-center">
+<div class="flex flex-col place-items-center">
   <div class="border-b-2 border-brownsugar h-96 w-96 m-10">
     {% load static %}
-    <a href="history"><img src="{% static 'keyTracker/assets/logo.svg' %}" alt=""></a>
+    <a href="history">
+      <img src="{% static 'keyTracker/assets/logo.svg' %}" alt="kiwi" class="scale-75">
+    </a>
+
+    {% if lastKey.keyHolder_id is user.id %}
+      <img src="{% static 'keyTracker/assets/keys.svg' %}" alt="keys" class=" relative bottom-64 right-32 scale-25">
+    {% endif %}
   </div>
   <br>  
   
@@ -31,7 +37,6 @@
         
       <div>
         {% comment %}This button has no submit because you don't need to take the key if you already have it{% endcomment %}
-        {% comment %} readded for testing 30/11/22 {% endcomment %}
         <button class="bg-darkgreen font-bold py-2 px-6 rounded w-max"  name="taken" type="submit">I took the key!</button>
       </div>
 

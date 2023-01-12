@@ -19,6 +19,7 @@ module.exports = {
       dropShadow: {
         'accentgreen': '0 35px 35px rgb(140, 255, 152, 0.25)',
       },
+      scale: { '25': '.25' },
     },
   },
   plugins: [],
