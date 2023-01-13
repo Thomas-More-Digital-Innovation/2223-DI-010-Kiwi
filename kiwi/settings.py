@@ -145,7 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # social-auth-app-django settings
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/'
+LOGIN_REDIRECT_URL = os.environ.get(
+    'LOGIN_REDIRECT_URL', default="'http://127.0.0.1:8080/")
 
 SOCIAL_AUTH_GITHUB_KEY = 'aedde0b2baec3b10a1e7'
 SOCIAL_AUTH_GITHUB_SECRET = '26fcf58e9cfcada8f670c30d753d66251c6fdde1'

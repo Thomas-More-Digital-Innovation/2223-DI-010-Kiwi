@@ -66,7 +66,7 @@ then to run it go do
 docker compose -f docker-compose-dev.yml up -d
 ~~~
 
-open terminal in that container:
+to open terminal in that container:
 
 ~~~bash
 docker compose -f docker-compose-dev.yml exec web bash
@@ -78,9 +78,8 @@ or
 docker exec -it <containerId> sh
 ~~~
 
-then run the migrations
-
 Make sure the order of the parameters is correct and the correct file is passed in both commands.
+The app can now be found at <http://localhost:8000/>>
 
 #### Production
 
