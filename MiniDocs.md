@@ -40,6 +40,8 @@ Python Social Auth is used for github authentication. More info about it can be 
 
 ## Deployment
 
+TODO: collectstatic
+
 ### Django development server
 
 You can use the development server that comes with Django itself by running
@@ -69,6 +71,14 @@ open terminal in that container:
 ~~~bash
 docker compose -f docker-compose-dev.yml exec web bash
 ~~~
+
+or
+
+~~~bash
+docker exec -it <containerId> sh
+~~~
+
+then run the migrations
 
 Make sure the order of the parameters is correct and the correct file is passed in both commands.
 
