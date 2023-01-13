@@ -88,7 +88,8 @@ To release a new version of the app to production, push your code and merge your
 To get these changes into production, just release new tags.
 
 ~~~bash
-git tag v1.0.0 git push --tags 
+git tag v1.0.0
+git push --tags 
 ~~~
 
 When this is done, Github Actions will (if the tests succeeded) run the 'build-container.yaml' file  to build the container and add it to the Github Container Registry. The container will then be pulled by the server with Watchtower and the container will be restarted. The newest changes should then be deployed.
