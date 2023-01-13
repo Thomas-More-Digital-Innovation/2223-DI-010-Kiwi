@@ -10,7 +10,7 @@ jobs:
   docker:
     strategy:
       matrix:
-        application: ["bricksandmore"]
+        application: ["kiwi"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
