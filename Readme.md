@@ -13,3 +13,19 @@ The problem with the first system is that it only keeps track of who took the ke
 The problem with the second system is that it is a closed server and thus cannot be used by teachers or students who are not in the server.
 
 A standalone tool that keeps track of the key is thus useful
+
+## installation
+
+TODO: Write installation instructions here
+
+dev build local
+
+build container:
+
+- docker compose -f docker-compose-dev.yml build
+
+run container:
+
+- docker compose -f docker-compose-dev.yml up -d
+
+make sure the order of the parameters is correct and the correct file is passed in both commands.
