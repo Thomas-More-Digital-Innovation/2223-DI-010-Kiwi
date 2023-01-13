@@ -11,7 +11,7 @@
         {% endif %}
     {% endif %}
   </div>
-  <div>{{ user.get_username }}</div>
+  <div class="font-semibold">{{ user.get_username }}</div>
   <div class="flex-1">
     <div class="w-max ml-auto underline "><a href="{% url 'keyTracker:logout' %}">logout</a></div>
   </div>
