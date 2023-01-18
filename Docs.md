@@ -2,7 +2,7 @@
 
 ## About
 
-Kiwi, like the bird not the fruit, is a webapp that keeps track of who has one common shared key. Users can use the app to indicate they have the key or returned it to a reception desk or lockbox.
+Kiwi, the bird not the fruit, is a webapp that keeps track of who has one common shared key. Users can use the app to indicate they have the key or returned it to a reception desk or lockbox.
 
 ## Make Tailwind update the css on changes
 
@@ -22,7 +22,7 @@ Kiwi, like the bird not the fruit, is a webapp that keeps track of who has one c
 
 ## How it works
 
-### sign up
+### Sign up
 
 When a user signs up, they enter a username, email, rnumber and password. They then need to be verified by the admin. The admin can do this by going to the django admin page and adding the newly created user to the group "DI". The user can then log in and use the app.
 
@@ -32,11 +32,15 @@ There are two template folders in the project. One in the KeyTracker app and one
 
 ## Future plans
 
-### Add login using GitHub
+### Add login using school account
 
 Github authentication was chosen because all students normally have a github account. Using their Thomas More / school account might have been even easier but required the use of Active Directory. Creating another Active Directory within the Thomas More organization was not possible.
 
 Python Social Auth is used for github authentication. More info about it can be found here: <https://python-social-auth.readthedocs.io/en/latest/backends/github.html>
+
+### Push notifications
+
+Users may want to get a push notification when the key has been returnedor taken. This can be done using the django-push-notifications package.
 
 ## Deployment
 
