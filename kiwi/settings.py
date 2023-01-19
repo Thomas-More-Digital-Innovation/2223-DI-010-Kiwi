@@ -28,6 +28,11 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="").split(" ")
 
+# To run locally with 'manage.py runserver'
+# SECRET_KEY = "secret-key"
+# DEBUG = True
+# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
